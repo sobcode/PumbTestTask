@@ -30,13 +30,19 @@ public class CSVHelper {
         builder.setTrim(true);
 
         try (BufferedReader fileReader =
-                     new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)); // ?
+                     new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
              CSVParser csvParser = new CSVParser(fileReader, builder.build()))
         {
             List<Animal> animals = new ArrayList<>();
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
             for(CSVRecord csvRecord : csvRecords) {
+                if(csvRecord.stream().anyMatch(String::isBlank) ||
+                        Integer.parseInt(csvRecord.get("Weight")) < 0 ||
+                        Integer.parseInt(csvRecord.get("Cost")) < 0) {
+                    continue;
+                }
+
                 Animal animal = new Animal(csvRecord.get("Name"),
                         csvRecord.get("Type"),
                         csvRecord.get("Sex"),
