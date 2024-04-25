@@ -25,7 +25,7 @@ public class XMLHelper {
 
             return animals.stream()
                     .filter(a -> a.getName() != null && a.getType() != null && a.getSex() != null
-                            && a.getWeight() > 0 && a.getCost() > 0)
+                            && a.getWeight() > 0 && a.getCost() != null && a.getCost() >= 0)
                     .map(a -> new Animal(a.getName(), a.getType(), a.getSex(), a.getWeight(), a.getCost()))
                     .collect(Collectors.toList());
         } catch (IOException e) {

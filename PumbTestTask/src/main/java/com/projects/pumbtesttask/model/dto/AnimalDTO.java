@@ -14,5 +14,5 @@ public class AnimalDTO {
     private String type;
     private String sex;
     private int weight;
-    private int cost;
+    private Integer cost;
 }

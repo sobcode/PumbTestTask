@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "animals")
@@ -32,16 +31,38 @@ public class Animal {
     @Column(name = "cost")
     private int cost;
 
+    @Column(name = "category")
+    private int category;
+
     public Animal(String name, String type, String sex, int weight, int cost) {
         this.name = name;
         this.type = type;
         this.sex = sex;
         this.weight = weight;
         this.cost = cost;
+
+        setCategory();
     }
 
     public static Animal getAnimalFromAnimalDTO(AnimalDTO animalDTO) {
         return new Animal(animalDTO.getName(), animalDTO.getType(), animalDTO.getSex(),
                 animalDTO.getWeight(), animalDTO.getCost());
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+        setCategory();
+    }
+
+    private void setCategory() {
+        if(cost >= 0 && cost <= 20) {
+            category = 1;
+        } else if(cost < 40) {
+            category = 2;
+        } else if(cost <= 60) {
+            category = 3;
+        } else {
+            category = 4;
+        }
     }
 }
