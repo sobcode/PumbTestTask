@@ -15,4 +15,5 @@ public class AnimalDTO {
     private String sex;
     private int weight;
     private Integer cost;
+    private int category;
 }
