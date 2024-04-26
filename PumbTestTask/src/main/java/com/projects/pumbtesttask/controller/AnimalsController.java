@@ -9,10 +9,14 @@ import com.projects.pumbtesttask.service.impl.CSVServiceImpl;
 import com.projects.pumbtesttask.service.impl.XMLServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 public class AnimalsController {
@@ -61,6 +65,26 @@ public class AnimalsController {
                                                                   @RequestParam(defaultValue = "") String category,
                                                                   @RequestParam(defaultValue = "") String sex,
                                                                   Pageable pageable) {
+
+        if(sortIsValid(pageable.getSort())) {
+            throw new IllegalArgumentException("Invalid sort field!");
+        }
+
         return ResponseEntity.ok(animalService.readAnimals(type, category, sex, pageable));
+    }
+
+    private boolean sortIsValid(Sort sort) {
+        List<String> validSortFields = Arrays.asList("name", "type", "sex", "weight", "cost", "category");
+
+        if(sort != null) {
+            for(Sort.Order order : sort) {
+                String fieldName = order.getProperty();
+
+                if(validSortFields.contains(fieldName)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
