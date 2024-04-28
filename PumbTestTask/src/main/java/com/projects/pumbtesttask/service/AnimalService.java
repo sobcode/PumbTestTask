@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * This interface defines methods for managing animal data.
+ */
 public interface AnimalService {
     PaginatedAnimalResponseDTO readAnimals(String type, String category, String sex, Pageable pageable);
 

@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class represents a Data Transfer Object (DTO) for animal data.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,5 +18,5 @@ public class AnimalDTO {
     private String sex;
     private int weight;
     private Integer cost;
-    private int category;
+    private int category; // depends on cost
 }

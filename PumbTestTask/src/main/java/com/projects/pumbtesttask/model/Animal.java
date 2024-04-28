@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class represents an animal entity.
+ */
 @Data
 @NoArgsConstructor
 @Entity
@@ -14,7 +17,7 @@ public class Animal {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long id; // primary key
 
     @Column(name = "name")
     private String name;
@@ -54,6 +57,13 @@ public class Animal {
         setCategory();
     }
 
+    /**
+     * Sets the animal's category based on its cost.
+     * <p>
+     * This private helper method is called by the class constructor and cost setter
+     * (whenever the cost is updated).
+     * It assigns a category value (1-4) based on cost ranges.
+     */
     private void setCategory() {
         if(cost >= 0 && cost <= 20) {
             category = 1;
