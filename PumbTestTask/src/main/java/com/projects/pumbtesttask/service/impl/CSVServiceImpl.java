@@ -22,8 +22,9 @@ public class CSVServiceImpl implements FileService {
 
     @Override
     public void save(MultipartFile file) {
+        CSVHelper csvHelper = new CSVHelper();
         try {
-            List<Animal> animals = CSVHelper.csvToAnimals(file.getInputStream());
+            List<Animal> animals = csvHelper.csvToAnimals(file.getInputStream());
             animalRepository.saveAll(animals);
 
         } catch (IOException e) {

@@ -22,8 +22,9 @@ public class XMLServiceImpl implements FileService {
 
     @Override
     public void save(MultipartFile file) {
+        XMLHelper xmlHelper = new XMLHelper();
         try {
-            List<Animal> animals = XMLHelper.xmlToAnimals(file.getInputStream());
+            List<Animal> animals = xmlHelper.xmlToAnimals(file.getInputStream());
             animalRepository.saveAll(animals);
 
         } catch (IOException e) {

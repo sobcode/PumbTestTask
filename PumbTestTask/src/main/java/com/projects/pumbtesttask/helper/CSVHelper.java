@@ -4,6 +4,8 @@ import com.projects.pumbtesttask.model.Animal;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -14,15 +16,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CSVHelper {
-    public static String type = "text/csv";
-    public static String[] headers = {"Name", "Type", "Sex", "Weight", "Cost"};
+    public String type = "text/csv";
+    public String[] headers = {"Name", "Type", "Sex", "Weight", "Cost"};
 
-    public static boolean hasCSVFormat(MultipartFile file) {
+    public boolean hasCSVFormat(MultipartFile file) {
         return type.equals(file.getContentType());
     }
 
-    public static List<Animal> csvToAnimals(InputStream is) {
+    public List<Animal> csvToAnimals(InputStream is) {
         CSVFormat.Builder builder = CSVFormat.DEFAULT.builder();
         builder.setHeader(headers);
         builder.setSkipHeaderRecord(true);
@@ -53,7 +56,7 @@ public class CSVHelper {
             }
 
             return animals;
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Fail to parse CSV file: " + e);
         }
     }

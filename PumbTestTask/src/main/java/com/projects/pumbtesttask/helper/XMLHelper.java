@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.projects.pumbtesttask.model.Animal;
 import com.projects.pumbtesttask.model.dto.AnimalDTO;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,14 +12,15 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class XMLHelper {
-    public static String type = "text/xml";
+    public String type = "text/xml";
 
-    public static boolean hasXMLFormat(MultipartFile file) {
+    public boolean hasXMLFormat(MultipartFile file) {
         return type.equals(file.getContentType());
     }
 
-    public static List<Animal> xmlToAnimals(InputStream is) {
+    public List<Animal> xmlToAnimals(InputStream is) {
         try {
             XmlMapper xmlMapper = new XmlMapper();
             List<AnimalDTO> animals = xmlMapper.readValue(is, new TypeReference<>() {});
