@@ -1,0 +1,123 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8081
+    description: Generated server url
+paths:
+  /api/files/uploads:
+    post:
+      tags:
+        - animals-controller
+      operationId: uploadAnimals
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponseDTO'
+  /api/animals/search:
+    get:
+      tags:
+        - animals-controller
+      operationId: readAnimals
+      parameters:
+        - name: type
+          in: query
+          required: false
+          schema:
+            type: string
+            default: ''
+        - name: category
+          in: query
+          required: false
+          schema:
+            description: possible categories - 1-4
+            type: string
+            default: ''
+        - name: sex
+          in: query
+          required: false
+          schema:
+            type: string
+            default: ''
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAnimalResponseDTO'
+components:
+  schemas:
+    UploadResponseDTO:
+      type: object
+      properties:
+        message:
+          type: string
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    AnimalDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        sex:
+          type: string
+        weight:
+          type: integer
+          format: int32
+        cost:
+          type: integer
+          format: int32
+        category:
+          type: integer
+          format: int32
+      xml:
+        name: animal
+    PaginatedAnimalResponseDTO:
+      type: object
+      properties:
+        animalList:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnimalDTO'
+        numberOfItems:
+          type: integer
+          format: int64
+        numberOfPages:
+          type: integer
+          format: int32
